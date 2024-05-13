@@ -16,29 +16,30 @@ To write a python program for creating Chat using TCP Sockets Links.
 ```
 import socket
 s=socket.socket()
-s.bind(('localhost',9000))
-s.listen(5)
-c,addr=s.accept()
-address={"6A:08:AA:C2":"192.168.1.100","8A:BC:E3:FA":"192.168.1.99"};
+s.connect(('localhost',8000))
 while True:
-    ip=c.recv(1024).decode()
-    try:
-        c.send(address[ip].encode())
-    except KeyError:
-        c.send("Not Found".encode())
+ msg=input("Client > ")
+ s.send(msg.encode())
+ print("Server > ",s.recv(1024).decode())
 ```
 ### Server
 ```
 import socket
 s=socket.socket()
-s.connect(('localhost',9000))
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
 while True:
-    ip=input("Enter MAC Address : ")
-    s.send(ip.encode())
-    print("Logical Address",s.recv(1024).decode())
+ ClientMessage=c.recv(1024).decode()
+ print("Client > ",ClientMessage)
+ msg=input("Server > ")
+ c.send(msg.encode())
 ```
 ## OUPUT
-![image](https://github.com/gokulvijayaramanuja/3b_CHAT_USING_TCP_SOCKETS/assets/119577543/592cd1a9-9fbf-473a-be3a-13ad4d64ff66)
+## Client:
+![client output](https://github.com/AnnaLahari/3b_CHAT_USING_TCP_SOCKETS/assets/149365425/047ce11a-a4d7-4371-a1fb-2c4d62fec59d)
+## Server:
+![server output](https://github.com/AnnaLahari/3b_CHAT_USING_TCP_SOCKETS/assets/149365425/b9ecce04-e616-4ac9-8e6f-af7939cca60d)
 
 
 ## RESULT
